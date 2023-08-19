@@ -1,4 +1,5 @@
 const redux = require('redux');
+const produce = require('immer.produce');
 const createStore = redux.createStore;
 const bindActionCreatore = redux.bindActionCreators;
 const combineReducers = redux.combineReducers;
@@ -55,10 +56,13 @@ const initialIceCreamState = {
 const cakeReducer = (state = initialCakeState, action) => {
   switch (action.type) {
     case CAKE_OREDERED:
-      return {
-        ...state,
-        numOfCakes: state.numOfCakes - action.payload,
-      };
+      //   return {
+      //     ...state,
+      //     numOfCakes: state.numOfCakes - action.payload,
+      //   };
+      return produce(state, draft => {
+        draft.numOfCakes = state.numOfCakes - action.payload;
+      });
     case CAKE_RESTOCKED:
       return {
         ...state,
